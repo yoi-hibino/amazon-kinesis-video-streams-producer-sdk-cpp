@@ -1,11 +1,22 @@
+PATH_PREV=$PATH
+
 #/root/tools/androidsdk/cmake/3.18.1/bin/cmake
+
 SDK_ROOT=/root/tools/androidsdk
 NDK_DIR=${SDK_ROOT}/ndk/23.0.7599858
 NDK_BIN_DIR=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64/bin
 CMAKE_BIN_DIR=${SDK_ROOT}/cmake/3.18.1/bin
 
-export API_LEVEL=23
+export PATH=$PATH:$NDK_BIN_DIR
 
+export ANDROID_NDK_ROOT=$NDK_DIR
+export ANDROID_NDK_HOME=$NDK_DIR
+export API_LEVEL=23
+export NDK=$NDK_DIR
+export TOOLCHAIN=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64
+
+
+#android-arm, android-arm64, android-x86 and android-x86_64
 ARCHS=("android-arm" "android-arm64" "android-x86" "android-x86_64")
 #ABIS=("armeabi-v7a" "arm64-v8a" "x86" "x86_64")
 ABIS=("armeabi-v7a")
@@ -16,17 +27,17 @@ PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
 
 rm -rf ${BUILD_DIR}
-rm -rf ${PRJ_ROOT}/open_source
+#rm -rf ${PRJ_ROOT}/open-source
 
 mkdir -p ${BUILD_DIR}
-mkdir -p ${PRJ_ROOT}/open_source
+mkdir -p ${PRJ_ROOT}/open-source
 
 echo ${BUILD_DIR}
 which cmake
 ${CMAKE_BIN_DIR}/cmake --version
 
-OPEN_SOURCE_DIR=${PRJ_ROOT}/open-source/local
-echo ${OPEN_SOURCE_DIR}
+export OPEN_SOURCE_DIR=${PRJ_ROOT}/open-source/local
+echo "OPEN_SOURCE_DIR=${OPEN_SOURCE_DIR}"
 echo ${NDK_BIN_DIR}
 
 cd ${BUILD_DIR}
@@ -57,10 +68,12 @@ export ABI=${ABIS[i]}
   cmake \
     -DCMAKE_FIND_ROOT_PATH=${OPEN_SOURCE_DIR} \
     -DCMAKE_TOOLCHAIN_FILE=${NDK_DIR}/build/cmake/android.toolchain.cmake \
+    -DANDROID_NDK_ROOT=${ANDROID_NDK_ROOT} \
     -DANDROID_TOOLCHAIN=clang \
     -DANDROID_ABI=${ABI} \
     -DANDROID_NDK=${NDK_DIR} \
     -DANDROID_PLATFORM=android-${API_LEVEL} \
+    -DANDROID_API_LEVEL=${API_LEVEL} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
     -DCMAKE_ANDROID_ARCH_ABI=${ABI} \
@@ -77,3 +90,4 @@ export ABI=${ABIS[i]}
 done
 
 cd $PRJ_ROOT
+export PATH=$PATH_PREV

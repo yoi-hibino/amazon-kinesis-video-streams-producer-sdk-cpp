@@ -1,5 +1,9 @@
 # only fetch target repo for add_subdirectory later
 function(fetch_repo lib_name)
+
+  message("fetch_repo ARGN = ${ARGN}")
+  set(build_args ${ARGN})
+
   set(supported_libs
       kvscproducer)
   list(FIND supported_libs ${lib_name} index)
@@ -13,7 +17,7 @@ function(fetch_repo lib_name)
     ./CMake/Dependencies/lib${lib_name}-CMakeLists.txt
     ${DEPENDENCY_DOWNLOAD_PATH}/lib${lib_name}/CMakeLists.txt COPYONLY)
   execute_process(
-    COMMAND ${CMAKE_COMMAND}
+    COMMAND ${CMAKE_COMMAND} ${build_args}
             ${CMAKE_GENERATOR} .
     RESULT_VARIABLE result
     WORKING_DIRECTORY ${DEPENDENCY_DOWNLOAD_PATH}/lib${lib_name})
@@ -76,7 +80,11 @@ function(build_dependency lib_name)
   # library building cmake.
   set(build_args ${ARGN})
 
+  message("ARGN = ${ARGN}")
+
   file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
+
+  message(STATUS "KINESIS_VIDEO_OPEN_SOURCE_SRC = ${KINESIS_VIDEO_OPEN_SOURCE_SRC}")
 
   # build library
   configure_file(
@@ -99,7 +107,7 @@ function(build_dependency lib_name)
     message(FATAL_ERROR "CMake step for lib${lib_name} failed: ${result}")
   endif()
 
-  file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
+  #file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
 endfunction()
 
 function(enableSanitizer SANITIZER)

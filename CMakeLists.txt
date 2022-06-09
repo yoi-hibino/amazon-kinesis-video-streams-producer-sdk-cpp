@@ -9,6 +9,25 @@ project(KinesisVideoProducerCpp)
 
 set(CMAKE_CXX_STANDARD 11)
 
+# Build setting
+set(CMAKE_ARGS
+        -DCMAKE_FIND_ROOT_PATH=${CMAKE_FIND_ROOT_PATH}
+        -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+        -DANDROID_TOOLCHAIN=clang
+        -DANDROID_NDK_ROOT=${ANDROID_NDK_ROOT}
+        -DANDROID_ABI=${ANDROID_ABI}
+        -DANDROID_NDK=${ANDROID_NDK}
+        -DANDROID_PLATFORM=${ANDROID_PLATFORM}
+        -DANDROID_API_LEVEL=${ANDROID_API_LEVEL}
+        -DANDROID_ARCH=${ANDROID_ARCH}
+        -DCMAKE_ANDROID_ARCH_ABI=${CMAKE_ANDROID_ARCH_ABI}
+        -DCMAKE_ANDROID_NDK=${CMAKE_ANDROID_NDK}
+        -DCMAKE_SYSTEM_NAME=Android
+        -DCMAKE_SYSTEM_VERSION=${CMAKE_SYSTEM_VERSION}
+        -DCMAKE_BUILD_TYPE=Release)
+
+message ("kvssink: CMAKE_FIND_ROOT_PATH=${CMAKE_FIND_ROOT_PATH}")
+
 # User Flags
 option(BUILD_GSTREAMER_PLUGIN "Build kvssink GStreamer plugin" OFF)
 option(BUILD_JNI "Build C++ wrapper for JNI to expose the functionality to Java/Android" OFF)
@@ -69,19 +88,21 @@ if(BUILD_DEPENDENCIES)
     set(ENV{PATH} "$ENV{PATH}:${OPEN_SRC_INSTALL_PREFIX}/bin")
   endif()
 
-
+  message("CMAKE_ARGS = ${CMAKE_ARGS}")
   message(STATUS "Begin building dependencies.")
 
   if (NOT WIN32)
     build_dependency(autoconf)
     build_dependency(automake)
   endif()
-  
+
+  message(STATUS "ANDROID_ABI = ${ANDROID_ABI}")
+
   if(BUILD_LOG4CPLUS_HOST)
     set(BUILD_ARGS -DBUILD_LOG4CPLUS_HOST=${BUILD_LOG4CPLUS_HOST})
-    build_dependency(log4cplus ${BUILD_ARGS})
+    build_dependency(log4cplus ${CMAKE_ARGS}  ${BUILD_ARGS})
   else()
-    build_dependency(log4cplus)
+    build_dependency(log4cplus ${CMAKE_ARGS})
   endif()
 
   message(STATUS "Finished building dependencies.")
@@ -97,12 +118,11 @@ set(DEPENDENCY_DOWNLOAD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/dependency)
 if(NOT EXISTS ${DEPENDENCY_DOWNLOAD_PATH})
   file(MAKE_DIRECTORY ${DEPENDENCY_DOWNLOAD_PATH})
 endif()
-fetch_repo(kvscproducer)
+fetch_repo(kvscproducer ${CMAKE_ARGS})
 add_subdirectory(${DEPENDENCY_DOWNLOAD_PATH}/libkvscproducer/kvscproducer-src EXCLUDE_FROM_ALL)
 
 message(STATUS "#####################################################################")
 
-message(FATAL_ERROR "======= STOP for now =======")
 
 ############# find dependent libraries ############
 
@@ -132,6 +152,8 @@ endif()
 if (WIN32)
   set(PKG_CONFIG_EXECUTABLE "C:\\gstreamer\\1.0\\x86_64\\bin\\pkg-config.exe")
 endif()
+
+message(FATAL_ERROR "======= STOP for now =======")
 
 ############# Enable Sanitizers ############
 if(${CMAKE_C_COMPILER_ID} MATCHES "GNU|Clang")
