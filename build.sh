@@ -14,8 +14,11 @@ ABIS2=("armv7" "arm64" "x86" "x86_64")
 
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
+
 rm -rf ${BUILD_DIR}
 rm -rf ${PRJ_ROOT}/open_source
+
+mkdir -p ${BUILD_DIR}
 mkdir -p ${PRJ_ROOT}/open_source
 
 echo ${BUILD_DIR}
