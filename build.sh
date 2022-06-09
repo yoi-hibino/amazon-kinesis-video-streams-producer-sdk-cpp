@@ -1,8 +1,8 @@
 #/root/tools/androidsdk/cmake/3.18.1/bin/cmake
 SDK_ROOT=/root/tools/androidsdk
-NDK_DIR=$ANDROID_SDK/ndk/23.0.7599858
-NDK_BIN_DIR=$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin
-CMAKE_BIN_DIR=$ANDROID_SDK_ROOT/cmake/3.18.1/bin
+NDK_DIR=${SDK_ROOT}/ndk/23.0.7599858
+NDK_BIN_DIR=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64/bin
+CMAKE_BIN_DIR=${SDK_ROOT}/cmake/3.18.1/bin
 
 export API_LEVEL=23
 
@@ -14,18 +14,19 @@ ABIS2=("armv7" "arm64" "x86" "x86_64")
 
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
-rm -rf $BUILD_DIR
-mkdir -p $BUILD_DIR
+rm -rf ${BUILD_DIR}
+rm -rf ${PRJ_ROOT}/open_source
+mkdir -p ${PRJ_ROOT}/open_source
 
-echo $BUILD_DIR
+echo ${BUILD_DIR}
 which cmake
-$CMAKE_BIN/cmake --version
+${CMAKE_BIN_DIR}/cmake --version
 
-OPEN_SOURCE_DIR=$PRJ_ROOT/open-source/local
-echo $OPEN_SOURCE_DIR
-echo $NDK_BIN_DIR
+OPEN_SOURCE_DIR=${PRJ_ROOT}/open-source/local
+echo ${OPEN_SOURCE_DIR}
+echo ${NDK_BIN_DIR}
 
-cd $BUILD_DIR
+cd ${BUILD_DIR}
 
 for ((i=0; i < ${#ABIS[@]}; i++))
 do
@@ -34,9 +35,9 @@ export ABI=${ABIS[i]}
   ABI2=${ABIS2[i]}
   TOOLCHAIN_NAME=${HOSTS[i]}
 
-  echo $ABI
-  echo $TOOLCHAIN_NAME
-  echo $API_LEVEL
+  echo ${ABI}
+  echo ${TOOLCHAIN_NAME}
+  echo ${API_LEVEL}
 
   export CC=${NDK_BIN_DIR}/clang
   export CXX=${NDK_BIN_DIR}/clang++
@@ -51,18 +52,18 @@ export ABI=${ABIS[i]}
   export NM=${NDK_BIN_DIR}/llvm-nm
   
   cmake \
-    -DCMAKE_FIND_ROOT_PATH=$OPEN_SOURCE_DIR \
-    -DCMAKE_TOOLCHAIN_FILE=$NDK_DIR/build/cmake/android.toolchain.cmake \
+    -DCMAKE_FIND_ROOT_PATH=${OPEN_SOURCE_DIR} \
+    -DCMAKE_TOOLCHAIN_FILE=${NDK_DIR}/build/cmake/android.toolchain.cmake \
     -DANDROID_TOOLCHAIN=clang \
-    -DANDROID_ABI=$ABI \
-    -DANDROID_NDK=$NDK_DIR \
-    -DANDROID_PLATFORM=android-$API_LEVEL \
+    -DANDROID_ABI=${ABI} \
+    -DANDROID_NDK=${NDK_DIR} \
+    -DANDROID_PLATFORM=android-${API_LEVEL} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-    -DCMAKE_ANDROID_ARCH_ABI=$ABI \
-    -DCMAKE_ANDROID_NDK=$NDK_DIR \
+    -DCMAKE_ANDROID_ARCH_ABI=${ABI} \
+    -DCMAKE_ANDROID_NDK=${NDK_DIR} \
     -DCMAKE_SYSTEM_NAME=Android \
-    -DCMAKE_SYSTEM_VERSION=$API_LEVEL \
+    -DCMAKE_SYSTEM_VERSION=${API_LEVEL} \
     -DOPENSSL_EXTRA=${OPENSSL_EXTRA} \
     -DANDROID_ARCH=${ANDROID_ARCH} \
     -DBUILD_DEPENDENCIES=TRUE \

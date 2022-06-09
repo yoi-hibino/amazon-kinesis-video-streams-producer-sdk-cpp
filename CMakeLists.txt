@@ -100,6 +100,10 @@ endif()
 fetch_repo(kvscproducer)
 add_subdirectory(${DEPENDENCY_DOWNLOAD_PATH}/libkvscproducer/kvscproducer-src EXCLUDE_FROM_ALL)
 
+message(STATUS "#####################################################################")
+
+message(FATAL_ERROR "======= STOP for now =======")
+
 ############# find dependent libraries ############
 
 find_package(Threads)
