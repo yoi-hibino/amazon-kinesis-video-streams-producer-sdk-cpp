@@ -15,6 +15,10 @@ export API_LEVEL=23
 export NDK=$NDK_DIR
 export TOOLCHAIN=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64
 
+#GSTREAMER_DIR=/root/develop/test3/gstreamer-1.0
+GSTREAMER_DIR=/home/jan/devel/gstreamer/cerbero/build/sources/android_universal
+#export PATH=$PATH:$NDK_BIN_DIR:$GSTREAMER_DIR/include:$GSTREAMER_DIR/lib
+export PATH=$PATH:$NDK_BIN_DIR
 
 #android-arm, android-arm64, android-x86 and android-x86_64
 ARCHS=("android-arm" "android-arm64" "android-x86" "android-x86_64")
@@ -53,6 +57,8 @@ export ABI=${ABIS[i]}
   echo ${TOOLCHAIN_NAME}
   echo ${API_LEVEL}
 
+  export PKG_CONFIG_PATH=${GSTREAMER_DIR}/${ABI2}/lib/pkgconfig
+
   export CC=${NDK_BIN_DIR}/clang
   export CXX=${NDK_BIN_DIR}/clang++
   export AS=${NDK_BIN_DIR}/llvm-as
@@ -66,11 +72,12 @@ export ABI=${ABIS[i]}
   export NM=${NDK_BIN_DIR}/llvm-nm
   
   cmake \
-    -DCMAKE_FIND_ROOT_PATH=${OPEN_SOURCE_DIR} \
+    -DCMAKE_FIND_ROOT_PATH="${OPEN_SOURCE_DIR};${GSTREAMER_DIR}/${ABI2}" \
     -DCMAKE_TOOLCHAIN_FILE=${NDK_DIR}/build/cmake/android.toolchain.cmake \
     -DANDROID_NDK_ROOT=${ANDROID_NDK_ROOT} \
     -DANDROID_TOOLCHAIN=clang \
     -DANDROID_ABI=${ABI} \
+    -DGST_ABI=${ABI2} \
     -DANDROID_NDK=${NDK_DIR} \
     -DANDROID_PLATFORM=android-${API_LEVEL} \
     -DANDROID_API_LEVEL=${API_LEVEL} \
@@ -83,6 +90,7 @@ export ABI=${ABIS[i]}
     -DOPENSSL_EXTRA=${OPENSSL_EXTRA} \
     -DANDROID_ARCH=${ANDROID_ARCH} \
     -DBUILD_DEPENDENCIES=TRUE \
+    -DBUILD_GSTREAMER_PLUGIN=TRUE \
     ..
 
   make 

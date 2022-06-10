@@ -153,7 +153,7 @@ if (WIN32)
   set(PKG_CONFIG_EXECUTABLE "C:\\gstreamer\\1.0\\x86_64\\bin\\pkg-config.exe")
 endif()
 
-message(FATAL_ERROR "======= STOP for now =======")
+#message(FATAL_ERROR "======= STOP for now =======")
 
 ############# Enable Sanitizers ############
 if(${CMAKE_C_COMPILER_ID} MATCHES "GNU|Clang")
@@ -221,24 +221,46 @@ endif()
 
 
 if(BUILD_GSTREAMER_PLUGIN)
+  set(GST_ROOT "/root/develop/test3/gstreamer-1.0/armv7")
   pkg_check_modules(GST_APP REQUIRED gstreamer-app-1.0)
+
+  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/gstreamer-1.0/gst
+  set(GST_APP_INCLUDE_DIRS "${GST_APP_INCLUDE_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/gstreamer-1.0")
+  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/glib-2.0
+  set(GST_APP_INCLUDE_DIRS "${GST_APP_INCLUDE_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/glib-2.0")
+  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/glib-2.0/include
+  set(GST_APP_INCLUDE_DIRS "${GST_APP_INCLUDE_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/glib-2.0/include")
+
+
+
+  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/gstreamer-1.0
+  set(GST_APP_LIBRARY_DIRS "${GST_APP_LIBRARY_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/gstreamer-1.0")
+  #
+
+  message("GST_APP_INCLUDE_DIRS = ${GST_APP_INCLUDE_DIRS}")
+  message("GST_APP_LIBRARY_DIRS = ${GST_APP_LIBRARY_DIRS}")
+  message("GST_APP_LIBRARIES = ${GST_APP_LIBRARIES}")
+  #GST_APP_LIBRARIES = gstapp-1.0;gstbase-1.0;gstreamer-1.0;gobject-2.0;glib-2.0;intl
+  #set(GST_APP_LIBRARIES "libgstapp-1.0;libgstbase-1.0;libgstreamer-1.0;libgobject-2.0;libglib-2.0;libintl")
+
   include_directories(${GST_APP_INCLUDE_DIRS})
+
   link_directories(${GST_APP_LIBRARY_DIRS})
 
-  add_library(gstkvssink MODULE ${GST_PLUGIN_SOURCE_FILES})
+  add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
   target_link_libraries(gstkvssink PRIVATE ${GST_APP_LIBRARIES} KinesisVideoProducer)
 
-  add_executable(kvs_gstreamer_sample samples/kvs_gstreamer_sample.cpp)
-  target_link_libraries(kvs_gstreamer_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
+  #add_executable(kvs_gstreamer_sample samples/kvs_gstreamer_sample.cpp)
+  #target_link_libraries(kvs_gstreamer_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
 
-  add_executable(kvs_gstreamer_multistream_sample samples/kvs_gstreamer_multistream_sample.cpp)
-  target_link_libraries(kvs_gstreamer_multistream_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
+  #add_executable(kvs_gstreamer_multistream_sample samples/kvs_gstreamer_multistream_sample.cpp)
+  #target_link_libraries(kvs_gstreamer_multistream_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
 
-  add_executable(kvs_gstreamer_audio_video_sample samples/kvs_gstreamer_audio_video_sample.cpp)
-  target_link_libraries(kvs_gstreamer_audio_video_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
+  #add_executable(kvs_gstreamer_audio_video_sample samples/kvs_gstreamer_audio_video_sample.cpp)
+  #target_link_libraries(kvs_gstreamer_audio_video_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
 
-  add_executable(kvs_gstreamer_file_uploader_sample samples/kvs_gstreamer_file_uploader_sample.cpp)
-  target_link_libraries(kvs_gstreamer_file_uploader_sample ${GST_APP_LIBRARIES})
+  #add_executable(kvs_gstreamer_file_uploader_sample samples/kvs_gstreamer_file_uploader_sample.cpp)
+  #target_link_libraries(kvs_gstreamer_file_uploader_sample ${GST_APP_LIBRARIES})
 endif()
 
 if(BUILD_TEST)
