@@ -23,17 +23,19 @@ export PATH=$PATH:$NDK_BIN_DIR
 #android-arm, android-arm64, android-x86 and android-x86_64
 ARCHS=("android-arm" "android-arm64" "android-x86" "android-x86_64")
 #ABIS=("armeabi-v7a" "arm64-v8a" "x86" "x86_64")
-ABIS=("armeabi-v7a")
+ABIS=("arm64-v8a")
 HOSTS=("arm-linux-androideabi" "aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
 ABIS2=("armv7" "arm64" "x86" "x86_64")
 
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
+OUTPUT_DIR=${PRJ_ROOT}/output
 
 rm -rf ${BUILD_DIR}
 #rm -rf ${PRJ_ROOT}/open-source
 
 mkdir -p ${BUILD_DIR}
+mkdir -p ${OUTPUT_DIR}
 mkdir -p ${PRJ_ROOT}/open-source
 
 echo ${BUILD_DIR}
@@ -44,18 +46,31 @@ export OPEN_SOURCE_DIR=${PRJ_ROOT}/open-source/local
 echo "OPEN_SOURCE_DIR=${OPEN_SOURCE_DIR}"
 echo ${NDK_BIN_DIR}
 
-cd ${BUILD_DIR}
+#cd ${BUILD_DIR}
 
 for ((i=0; i < ${#ABIS[@]}; i++))
 do
-export ABI=${ABIS[i]}
+  rm -rf ${BUILD_DIR}
+  rm -rf ${PRJ_ROOT}/open-source
+  rm -rf ${PRJ_ROOT}/dependency
+  mkdir -p ${BUILD_DIR}
+  #mkdir -p ${PRJ_ROOT}/open-source
+
+  cd ${BUILD_DIR}
+
+  export ABI=${ABIS[i]}
   export ANDROID_ARCH=${ARCHS[i]}
   ABI2=${ABIS2[i]}
   TOOLCHAIN_NAME=${HOSTS[i]}
 
+  OUTPUT_PLUGIN_PATH=${OUTPUT_DIR}/${ABI}/plugin
+  OUTPUT_LIB_PATH=${OUTPUT_DIR}/${ABI}/lib
+  mkdir -p ${OUTPUT_PLUGIN_PATH}
+
   echo ${ABI}
   echo ${TOOLCHAIN_NAME}
   echo ${API_LEVEL}
+  echo ${OUTPUT_PLUGIN_PATH}
 
   export PKG_CONFIG_PATH=${GSTREAMER_DIR}/${ABI2}/lib/pkgconfig
 
@@ -95,7 +110,16 @@ export ABI=${ABIS[i]}
 
   make 
 
+  if [ -f ${BUILD_DIR}/libKinesisVideoProducer.so -a -f ${BUILD_DIR}/libgstkvssink.a ]; then
+    cp ${BUILD_DIR}/libKinesisVideoProducer.so  ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_PLUGIN_PATH}
+  fi
+
+  cp -RT ${PRJ_ROOT}/open-source/local/lib ${OUTPUT_LIB_PATH}
+
+  cd $PRJ_ROOT
+
 done
 
-cd $PRJ_ROOT
+#cd $PRJ_ROOT
 export PATH=$PATH_PREV
+
