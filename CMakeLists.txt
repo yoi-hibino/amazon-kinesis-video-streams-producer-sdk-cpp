@@ -221,21 +221,15 @@ endif()
 
 
 if(BUILD_GSTREAMER_PLUGIN)
-  set(GST_ROOT "/root/develop/test3/gstreamer-1.0/armv7")
+  #set(GST_ROOT "/root/develop/test3/gstreamer-1.0/armv7")
   pkg_check_modules(GST_APP REQUIRED gstreamer-app-1.0)
 
-  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/gstreamer-1.0/gst
   set(GST_APP_INCLUDE_DIRS "${GST_APP_INCLUDE_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/gstreamer-1.0")
-  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/glib-2.0
   set(GST_APP_INCLUDE_DIRS "${GST_APP_INCLUDE_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/include/glib-2.0")
-  #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/glib-2.0/include
   set(GST_APP_INCLUDE_DIRS "${GST_APP_INCLUDE_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/glib-2.0/include")
 
-
-
   #/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/gstreamer-1.0
-  set(GST_APP_LIBRARY_DIRS "${GST_APP_LIBRARY_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/gstreamer-1.0")
-  #
+  #set(GST_APP_LIBRARY_DIRS "${GST_APP_LIBRARY_DIRS};/home/jan/devel/gstreamer/cerbero/build/sources/android_universal/${GST_ABI}/lib/gstreamer-1.0")
 
   message("GST_APP_INCLUDE_DIRS = ${GST_APP_INCLUDE_DIRS}")
   message("GST_APP_LIBRARY_DIRS = ${GST_APP_LIBRARY_DIRS}")
@@ -244,11 +238,27 @@ if(BUILD_GSTREAMER_PLUGIN)
   #set(GST_APP_LIBRARIES "libgstapp-1.0;libgstbase-1.0;libgstreamer-1.0;libgobject-2.0;libglib-2.0;libintl")
 
   include_directories(${GST_APP_INCLUDE_DIRS})
-
   link_directories(${GST_APP_LIBRARY_DIRS})
 
-  add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
-  target_link_libraries(gstkvssink PUBLIC ${GST_APP_LIBRARIES} KinesisVideoProducer)
+  #add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
+  add_library(gstkvssink ${GST_PLUGIN_SOURCE_FILES})
+
+  target_link_libraries(gstkvssink 
+    PUBLIC 
+    ${GST_APP_LIBRARIES} 
+    KinesisVideoProducer
+  )
+
+  target_include_directories(kvssink 
+    PUBLIC 
+    ${GST_APP_INCLUDE_DIRS}
+  )
+  
+  target_compile_options(kvssink
+  PUBLIC
+    -Wno-unused-parameter
+    -Wno-implicit-fallthrough
+  )
 
   #add_executable(kvs_gstreamer_sample samples/kvs_gstreamer_sample.cpp)
   #target_link_libraries(kvs_gstreamer_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
