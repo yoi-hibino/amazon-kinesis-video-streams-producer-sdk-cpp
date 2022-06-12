@@ -35,10 +35,15 @@ GSTREAMER_DIR=/home/jan/devel/gstreamer/cerbero/build/sources/android_universal
 #HOSTS=("arm-linux-androideabi" "i686-linux-android" "x86_64-linux-android")
 #ABIS2=("armv7" "x86" "x86_64")
 
-ARCHS=("android-arm")
-ABIS=("armeabi-v7a")
-HOSTS=("arm-linux-androideabi")
-ABIS2=("armv7")
+ARCHS=("android-arm64" "android-x86" "android-x86_64")
+ABIS=("arm64-v8a" "x86" "x86_64")
+HOSTS=("aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
+ABIS2=("arm64" "x86" "x86_64")
+
+#ARCHS=("android-arm")
+#ABIS=("armeabi-v7a")
+#HOSTS=("arm-linux-androideabi")
+#ABIS2=("armv7")
 
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
@@ -78,9 +83,7 @@ do
 
   OUTPUT_PATH=${OUTPUT_DIR}/${ABI}
   OUTPUT_LIB_PATH=${OUTPUT_PATH}/lib
-  OUTPUT_PLUGIN_PATH=${OUTPUT_PATH}/plugin
   mkdir -p ${OUTPUT_LIB_PATH}
-  mkdir -p ${OUTPUT_PLUGIN_PATH}
 
   echo ${ABI}
   echo ${TOOLCHAIN_NAME}
@@ -121,15 +124,16 @@ do
     -DANDROID_ARCH=${ANDROID_ARCH} \
     -DBUILD_DEPENDENCIES=TRUE \
     -DBUILD_GSTREAMER_PLUGIN=TRUE \
+    -DBUILD_STATIC=TRUE \
     ..
 
   make 
-  #cmake DESTDIR=${OUTPUT_PATH} install
+  #make DESTDIR=${OUTPUT_PATH} install
 
   #if [ -f ${BUILD_DIR}/libKinesisVideoProducer.so -a -f ${BUILD_DIR}/libgstkvssink.a ]; then
   #  cp ${BUILD_DIR}/libKinesisVideoProducer.so  ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_PLUGIN_PATH}
   #fi
-  cp ${BUILD_DIR}/libKinesisVideoProducer.so  ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_PLUGIN_PATH}
+  cp ${BUILD_DIR}/libKinesisVideoProducer.a  ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_LIB_PATH}
   cp -RT ${PRJ_ROOT}/open-source/local/lib ${OUTPUT_LIB_PATH}
 
 
@@ -137,10 +141,6 @@ do
   #build/dependency/libkvscproducer/kvscproducer-src/dependency/libkvspic/kvspic-src/libkvspic.a
   KVSPIC_DIR=${BUILD_DIR}/dependency/libkvscproducer/kvscproducer-src/dependency/libkvspic/kvspic-src
   cp ${KVSPIC_DIR}/libkvspic.a ${KVSPIC_DIR}/libkvspicUtils.a ${OUTPUT_LIB_PATH}
-  #if [ -f ${KVSPIC_DIR}/libkvspic.a -a -f ${KVSPIC_DIR}/libkvspicUtils.a ]; then
-  #  cp ${KVSPIC_DIR}/libkvspic.a ${KVSPIC_DIR}/libkvspicUtils.a ${OUTPUT_LIB_PATH}
-  #fi
-  #build/dependency/libkvscproducer/kvscproducer-src/dependency/libkvspic/kvspic-src/libkvspic.a libkvspicUtils.a
 
   cd $PRJ_ROOT
 
