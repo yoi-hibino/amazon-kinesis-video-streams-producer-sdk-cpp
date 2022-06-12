@@ -35,15 +35,15 @@ GSTREAMER_DIR=/home/jan/devel/gstreamer/cerbero/build/sources/android_universal
 #HOSTS=("arm-linux-androideabi" "i686-linux-android" "x86_64-linux-android")
 #ABIS2=("armv7" "x86" "x86_64")
 
-ARCHS=("android-arm64" "android-x86" "android-x86_64")
-ABIS=("arm64-v8a" "x86" "x86_64")
-HOSTS=("aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
-ABIS2=("arm64" "x86" "x86_64")
+#ARCHS=("android-arm64" "android-x86" "android-x86_64")
+#ABIS=("arm64-v8a" "x86" "x86_64")
+#HOSTS=("aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
+#ABIS2=("arm64" "x86" "x86_64")
 
-#ARCHS=("android-arm")
-#ABIS=("armeabi-v7a")
-#HOSTS=("arm-linux-androideabi")
-#ABIS2=("armv7")
+ARCHS=("android-arm")
+ABIS=("armeabi-v7a")
+HOSTS=("arm-linux-androideabi")
+ABIS2=("armv7")
 
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
@@ -124,7 +124,6 @@ do
     -DANDROID_ARCH=${ANDROID_ARCH} \
     -DBUILD_DEPENDENCIES=TRUE \
     -DBUILD_GSTREAMER_PLUGIN=TRUE \
-    -DBUILD_STATIC=TRUE \
     ..
 
   make 
@@ -133,7 +132,7 @@ do
   #if [ -f ${BUILD_DIR}/libKinesisVideoProducer.so -a -f ${BUILD_DIR}/libgstkvssink.a ]; then
   #  cp ${BUILD_DIR}/libKinesisVideoProducer.so  ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_PLUGIN_PATH}
   #fi
-  cp ${BUILD_DIR}/libKinesisVideoProducer.a  ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_LIB_PATH}
+  cp ${BUILD_DIR}/libKinesisVideoProducer.so ${BUILD_DIR}/libgstkvssink.a ${OUTPUT_LIB_PATH}
   cp -RT ${PRJ_ROOT}/open-source/local/lib ${OUTPUT_LIB_PATH}
 
 

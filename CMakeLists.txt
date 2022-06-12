@@ -31,7 +31,7 @@ message ("kvssink: CMAKE_FIND_ROOT_PATH=${CMAKE_FIND_ROOT_PATH}")
 # User Flags
 option(BUILD_GSTREAMER_PLUGIN "Build kvssink GStreamer plugin" OFF)
 option(BUILD_JNI "Build C++ wrapper for JNI to expose the functionality to Java/Android" OFF)
-option(BUILD_STATIC "Build with static linkage" ON)
+option(BUILD_STATIC "Build with static linkage" OFF)
 option(ADD_MUCLIBC "Add -muclibc c flag" OFF)
 option(BUILD_DEPENDENCIES "Whether or not to build depending libraries from source" ON)
 option(BUILD_OPENSSL_PLATFORM "If buildng OpenSSL what is the target platform" OFF)
@@ -253,7 +253,11 @@ if(BUILD_GSTREAMER_PLUGIN)
     PUBLIC 
     ${GST_APP_INCLUDE_DIRS}
   )
-  
+  install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/include
+    DESTINATION .
+  )
+
   target_compile_options(gstkvssink
   PUBLIC
     -Wno-unused-parameter
