@@ -35,5 +35,5 @@ URL: https://curl.haxx.se/
 Description: Library to transfer files with ftp, http, etc.
 Version: 7.68.0-DEV
 Libs: -L${libdir} -lcurl
-Libs.private:  -latomic -lm -l:libunwind.a -ldl -lc -l:libunwind.a -ldl -ldl -pthread -lOpenSSL::SSL -lOpenSSL::Crypto -lZLIB::ZLIB
+Libs.private:  -lgcc -ldl -lc -lgcc -ldl -ldl -pthread -lOpenSSL::SSL -lOpenSSL::Crypto -lZLIB::ZLIB
 Cflags: -I${includedir} 

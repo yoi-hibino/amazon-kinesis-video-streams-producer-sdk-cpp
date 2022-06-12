@@ -1,27 +1,28 @@
-PATH_PREV=$PATH
+PATH_PREV=/root/tools/androidsdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
+#/root/tools/androidsdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/tools/androidsdk/ndk/23.0.7599858/toolchains/llvm/prebuilt/linux-x86_64/bin:/root/tools/androidsdk/ndk/23.0.7599858/toolchains/llvm/prebuilt/linux-x86_64/bin:/root/tools/androidsdk/ndk/23.0.7599858/toolchains/llvm/prebuilt/linux-x86_64/bin
+
 
 #/root/tools/androidsdk/cmake/3.18.1/bin/cmake
 
 SDK_ROOT=/root/tools/androidsdk
-NDK_DIR=${SDK_ROOT}/ndk/24.0.8215888
+NDK_DIR=${SDK_ROOT}/ndk/22.1.7171670
 #24.0.8215888
 #23.0.7599858
 NDK_BIN_DIR=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64/bin
 CMAKE_BIN_DIR=${SDK_ROOT}/cmake/3.18.1/bin
 
-export PATH=$PATH:$NDK_BIN_DIR
+export PATH=$PATH_PREV:$NDK_BIN_DIR
 
 export ANDROID_NDK_ROOT=$NDK_DIR
 export ANDROID_NDK_HOME=$NDK_DIR
 export ANDROID_NDK=$NDK_DIR
-export API_LEVEL=23
+export API_LEVEL=24
 export NDK=$NDK_DIR
 export TOOLCHAIN=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64
 
 #GSTREAMER_DIR=/root/develop/test3/gstreamer-1.0
 GSTREAMER_DIR=/home/jan/devel/gstreamer/cerbero/build/sources/android_universal
 #export PATH=$PATH:$NDK_BIN_DIR:$GSTREAMER_DIR/include:$GSTREAMER_DIR/lib
-export PATH=$PATH:$NDK_BIN_DIR
 
 #android-arm, android-arm64, android-x86 and android-x86_64
 #ARCHS=("android-arm" "android-arm64" "android-x86" "android-x86_64")
@@ -29,15 +30,15 @@ export PATH=$PATH:$NDK_BIN_DIR
 #HOSTS=("arm-linux-androideabi" "aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
 #ABIS2=("armv7" "arm64" "x86" "x86_64")
 
-#ARCHS=("android-arm" "android-x86" "android-x86_64")
-#ABIS=("armeabi-v7a" "x86" "x86_64")
-#HOSTS=("arm-linux-androideabi" "i686-linux-android" "x86_64-linux-android")
-#ABIS2=("armv7" "x86" "x86_64")
+ARCHS=("android-arm" "android-x86" "android-x86_64")
+ABIS=("armeabi-v7a" "x86" "x86_64")
+HOSTS=("arm-linux-androideabi" "i686-linux-android" "x86_64-linux-android")
+ABIS2=("armv7" "x86" "x86_64")
 
-ARCHS=("android-arm64")
-ABIS=("arm64-v8a")
-HOSTS=("aarch64-linux-android")
-ABIS2=("arm64")
+#ARCHS=("android-arm64")
+#ABIS=("arm64-v8a")
+#HOSTS=("aarch64-linux-android")
+#ABIS2=("arm64")
 
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
