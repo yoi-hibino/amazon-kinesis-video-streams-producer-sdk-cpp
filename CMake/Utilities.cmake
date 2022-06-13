@@ -82,7 +82,7 @@ function(build_dependency lib_name)
 
   message("ARGN = ${ARGN}")
 
-  file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
+  #file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
 
   message(STATUS "KINESIS_VIDEO_OPEN_SOURCE_SRC = ${KINESIS_VIDEO_OPEN_SOURCE_SRC}")
 
@@ -107,7 +107,7 @@ function(build_dependency lib_name)
     message(FATAL_ERROR "CMake step for lib${lib_name} failed: ${result}")
   endif()
 
-  file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
+  #file(REMOVE_RECURSE ${KINESIS_VIDEO_OPEN_SOURCE_SRC}/lib${lib_name})
 endfunction()
 
 function(enableSanitizer SANITIZER)

@@ -80,7 +80,7 @@ namespace com { namespace amazonaws { namespace kinesis { namespace video {
 
 
 // defines a class which contains a logger instance with the given tag
-#define LOGGER_TAG(tag) \
+ #define LOGGER_TAG(tag) \
   struct KinesisVideoLogger { \
     static log4cplus::Logger& getInstance() { \
       static log4cplus::Logger s_logger = log4cplus::Logger::getInstance(tag); \
