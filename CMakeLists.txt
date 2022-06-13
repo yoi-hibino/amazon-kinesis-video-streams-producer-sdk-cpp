@@ -240,8 +240,8 @@ if(BUILD_GSTREAMER_PLUGIN)
   include_directories(${GST_APP_INCLUDE_DIRS})
   link_directories(${GST_APP_LIBRARY_DIRS})
 
-  #add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
-  add_library(gstkvssink ${GST_PLUGIN_SOURCE_FILES})
+  add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
+  #add_library(gstkvssink ${GST_PLUGIN_SOURCE_FILES})
 
   target_link_libraries(gstkvssink 
     PUBLIC 
@@ -258,11 +258,11 @@ if(BUILD_GSTREAMER_PLUGIN)
     DESTINATION .
   )
 
-  target_compile_options(gstkvssink
-  PUBLIC
-    -Wno-unused-parameter
-    -Wno-implicit-fallthrough
-  )
+  #target_compile_options(gstkvssink
+  #PUBLIC
+  #  -Wno-unused-parameter
+  #  -Wno-implicit-fallthrough
+  #)
 
   #add_executable(kvs_gstreamer_sample samples/kvs_gstreamer_sample.cpp)
   #target_link_libraries(kvs_gstreamer_sample ${GST_APP_LIBRARIES} KinesisVideoProducer)
