@@ -1417,6 +1417,19 @@ static gboolean plugin_init(GstPlugin *plugin) {
     return TRUE;
 }
 
+int gstkvssink_register_static() {
+  return gst_plugin_register_static(
+    GST_VERSION_MAJOR,
+    GST_VERSION_MINOR,
+    "kvssink",
+    "GStreamer AWS KVS plugin",
+    plugin_init,
+    "1.0",
+    "Proprietary",
+    "GStreamer",
+    "http://gstreamer.net/");
+}
+
 #define PACKAGE "kvssinkpackage"
 GST_PLUGIN_DEFINE (
         GST_VERSION_MAJOR,

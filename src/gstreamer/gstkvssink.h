@@ -167,4 +167,8 @@ struct _KvsSinkCustomData {
     uint64_t producer_start_time;
 };
 
+extern "C" {
+  int gstkvssink_register_static();
+}
+
 #endif /* __GST_KVS_SINK_H__ */
