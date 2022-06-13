@@ -240,8 +240,8 @@ if(BUILD_GSTREAMER_PLUGIN)
   include_directories(${GST_APP_INCLUDE_DIRS})
   link_directories(${GST_APP_LIBRARY_DIRS})
 
-  add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
-  #add_library(gstkvssink ${GST_PLUGIN_SOURCE_FILES})
+  #add_library(gstkvssink STATIC ${GST_PLUGIN_SOURCE_FILES})
+  add_library(gstkvssink ${GST_PLUGIN_SOURCE_FILES})
 
   target_link_libraries(gstkvssink 
     PUBLIC 
