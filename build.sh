@@ -5,7 +5,8 @@ PATH_PREV=/root/tools/androidsdk/cmdline-tools/latest/bin:/usr/local/sbin:/usr/l
 #/root/tools/androidsdk/cmake/3.18.1/bin/cmake
 
 SDK_ROOT=/root/tools/androidsdk
-NDK_DIR=${SDK_ROOT}/ndk/22.1.7171670
+#NDK_DIR=${SDK_ROOT}/ndk/22.1.7171670
+NDK_DIR=${SDK_ROOT}/ndk/20.1.5948944
 #24.0.8215888
 #23.0.7599858
 NDK_BIN_DIR=${NDK_DIR}/toolchains/llvm/prebuilt/linux-x86_64/bin
@@ -45,8 +46,8 @@ BUILD_DIR=${PRJ_ROOT}/build
 OUTPUT_DIR=${PRJ_ROOT}/output
 
 rm -rf ${BUILD_DIR}
-#rm -rf ${OUTPUT_DIR}
-#rm -rf ${PRJ_ROOT}/open-source
+rm -rf ${OUTPUT_DIR}
+rm -rf ${PRJ_ROOT}/open-source
 
 mkdir -p ${BUILD_DIR}
 mkdir -p ${OUTPUT_DIR}
