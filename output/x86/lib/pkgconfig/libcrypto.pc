@@ -1,4 +1,4 @@
-prefix=/root/develop/test3/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local
+prefix=/root/develop/android/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

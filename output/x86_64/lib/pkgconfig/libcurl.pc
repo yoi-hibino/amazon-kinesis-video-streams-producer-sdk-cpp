@@ -23,9 +23,9 @@
 # This should most probably benefit from getting a "Requires:" field added
 # dynamically by configure.
 #
-prefix=/root/develop/test3/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local
+prefix=/root/develop/android/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local
 exec_prefix=${prefix}
-libdir=/root/develop/test3/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local/lib
+libdir=/root/develop/android/amazon-kinesis-video-streams-producer-sdk-cpp/open-source/local/lib
 includedir=${prefix}/include
 supported_protocols="HTTP HTTPS"
 supported_features="SSL IPv6 unix-sockets libz AsynchDNS NTLM"
