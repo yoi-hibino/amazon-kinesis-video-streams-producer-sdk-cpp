@@ -181,19 +181,11 @@ extern "C" {
  * The following are cipher-specific, but are part of the public API.
  */
 #if !defined(OPENSSL_SYS_UEFI)
-<<<<<<< HEAD
-# undef BN_LLONG
-/* Only one for the following should be defined */
-# define SIXTY_FOUR_BIT_LONG
-# undef SIXTY_FOUR_BIT
-# undef THIRTY_TWO_BIT
-=======
 # define BN_LLONG
 /* Only one for the following should be defined */
 # undef SIXTY_FOUR_BIT_LONG
 # undef SIXTY_FOUR_BIT
 # define THIRTY_TWO_BIT
->>>>>>> 102a2ff141c849b0e9a094f930d8ec07c4f3e47c
 #endif
 
 #define RC4_INT unsigned char

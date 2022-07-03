@@ -29,6 +29,8 @@ set(CMAKE_ARGS
 
 message ("kvssink: CMAKE_FIND_ROOT_PATH=${CMAKE_FIND_ROOT_PATH}")
 
+message ("kvssink: CERT_FILE=${CERT_FILE}")
+
 # User Flags
 option(BUILD_GSTREAMER_PLUGIN "Build kvssink GStreamer plugin" OFF)
 option(BUILD_JNI "Build C++ wrapper for JNI to expose the functionality to Java/Android" OFF)
