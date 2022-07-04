@@ -26,10 +26,10 @@ GSTREAMER_DIR=/home/jan/devel/gstreamer/cerbero/build/sources/android_universal
 #export PATH=$PATH:$NDK_BIN_DIR:$GSTREAMER_DIR/include:$GSTREAMER_DIR/lib
 
 #android-arm, android-arm64, android-x86 and android-x86_64
-ARCHS=("android-arm" "android-arm64" "android-x86" "android-x86_64")
-ABIS=("armeabi-v7a" "arm64-v8a" "x86" "x86_64")
-HOSTS=("arm-linux-androideabi" "aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
-ABIS2=("armv7" "arm64" "x86" "x86_64")
+#ARCHS=("android-arm" "android-arm64" "android-x86" "android-x86_64")
+#ABIS=("armeabi-v7a" "arm64-v8a" "x86" "x86_64")
+#HOSTS=("arm-linux-androideabi" "aarch64-linux-android" "i686-linux-android" "x86_64-linux-android")
+#ABIS2=("armv7" "arm64" "x86" "x86_64")
 
 #ARCHS=("android-arm64" "android-x86" "android-x86_64")
 #ABIS=("arm64-v8a" "x86" "x86_64")
@@ -41,15 +41,17 @@ ABIS2=("armv7" "arm64" "x86" "x86_64")
 #HOSTS=("arm-linux-androideabi")
 #ABIS2=("armv7")
 
+ARCHS=("android-arm64")
+ABIS=("arm64-v8a")
+HOSTS=("aarch64-linux-android")
+ABIS2=("arm64")
+
 PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
 OUTPUT_DIR=${PRJ_ROOT}/output
 
 CERT_FILE=/ststem/etc/seculity/cacerts
 
-#rm -rf ${BUILD_DIR}
-#rm -rf ${OUTPUT_DIR}
-#rm -rf ${PRJ_ROOT}/open-source
 
 mkdir -p ${BUILD_DIR}
 mkdir -p ${OUTPUT_DIR}
