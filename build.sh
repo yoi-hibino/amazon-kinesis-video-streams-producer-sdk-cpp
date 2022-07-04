@@ -50,7 +50,7 @@ PRJ_ROOT=${PWD}
 BUILD_DIR=${PRJ_ROOT}/build
 OUTPUT_DIR=${PRJ_ROOT}/output
 
-CERT_FILE=/ststem/etc/seculity/cacerts
+CERT_FILE=/ststem/etc/seculity
 
 
 mkdir -p ${BUILD_DIR}
